@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Faker\Provider\pt_PT;
 
 class TeacherFactory extends Factory
 {
@@ -23,7 +24,7 @@ class TeacherFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'cpf' => $this->faker->unique()->numerify('###########'),
+            'cpf' => $this->faker->cpf(false),
             'birth_date' => $this->faker->date(),
         ];
     }

@@ -2,8 +2,9 @@
 
 @isset($teachers)
     @foreach ($teachers as $teacher)
-        {{ $teacher->name }}
-        {{ $teacher->cpf }}
-        {{ $teacher->birth_date }}
+        {{ $teacher->name }} </br>
+        {{ $teacher->cpf }}</br>
+        {{ $teacher->birth_date }}</br>
+        --------- </br>
     @endforeach
 @endisset

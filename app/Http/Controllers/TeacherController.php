@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherRequest;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::all();
-        return view('teacher.index', compact($teachers));
+        return view('teacher.index', compact('teachers'));
     }
 
     /**
@@ -34,10 +35,10 @@ class TeacherController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
         $teacher = Teacher::create($request->validated());
-        return back();
+        return redirect()->route('teacher.index');
     }
 
     /**
@@ -48,7 +49,7 @@ class TeacherController extends Controller
     */
     public function show(Teacher $teacher)
     {
-        return view('teacher.show', compact($teacher));
+        return view('teacher.show', compact('teacher'));
     }
 
     /**
@@ -59,7 +60,7 @@ class TeacherController extends Controller
     */
     public function edit(Teacher $teacher)
     {
-        return view('teacher.edit', compact($teacher));
+        return view('teacher.edit', compact('teacher'));
     }
 
     /**
@@ -69,7 +70,7 @@ class TeacherController extends Controller
     * @param  \App\Models\Teacher  $teacher
     * @return \Illuminate\Http\Response
     */
-    public function update(Request $request, Teacher $teacher)
+    public function update(TeacherRequest $request, Teacher $teacher)
     {
         $teacher->update($request->validated());
         return back();

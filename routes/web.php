@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('teacher', TeacherController::class);
+Route::resource('teacher', TeacherController::class)
+    ->missing(function (Request $request) {
+        return Redirect::route('teacher.index');
+    });
