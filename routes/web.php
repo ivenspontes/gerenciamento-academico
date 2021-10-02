@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -24,3 +25,8 @@ Route::resource('teacher', TeacherController::class)
     ->missing(function (Request $request) {
         return Redirect::route('teacher.index');
     });
+
+Route::resource('discipline', DisciplineController::class)
+->missing(function (Request $request) {
+    return Redirect::route('discipline.index');
+});
