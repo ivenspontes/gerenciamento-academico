@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Discipline;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -51,5 +52,21 @@ class TeacherDatabaseTest extends TestCase
         $teacher->delete();
 
         $this->assertDeleted('teachers', $teacher->only('name','cpf','birth_date'));
+    }
+
+    /**
+     * Test if model can attach discipline
+     *
+     * @return void
+     */
+    public function test_if_teacher_can_attach_discipline()
+    {
+        $teacher = Teacher::factory()->create();
+        $discipline = Discipline::factory()->create();
+
+        $teacher->disciplines()->attach($discipline);
+
+        $this->assertCount(1, $teacher->fresh()->disciplines);
+        $this->assertTrue($teacher->disciplines()->first()->is($discipline));
     }
 }
