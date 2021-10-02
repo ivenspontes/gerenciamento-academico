@@ -22,7 +22,7 @@ class DisciplineFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => 'disciplina '.$this->faker->unique()->region(),
         ];
     }
 }

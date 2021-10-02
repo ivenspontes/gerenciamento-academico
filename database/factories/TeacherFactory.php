@@ -24,7 +24,7 @@ class TeacherFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'cpf' => $this->faker->cpf(false),
+            'cpf' => $this->faker->unique()->cpf(false),
             'birth_date' => $this->faker->date(),
         ];
     }
