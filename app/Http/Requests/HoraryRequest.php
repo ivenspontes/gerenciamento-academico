@@ -25,6 +25,7 @@ class HoraryRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|unique:horaries,name,except,id',
             'teacher_id' => 'required|exists:teachers,id',
             'discipline_id' => 'required|exists:disciplines,id',
             'grid_id' => 'required|exists:grids,id',
@@ -35,7 +36,7 @@ class HoraryRequest extends FormRequest
                     $startTime = Carbon::parse($this->input('start_time'));
                     $endTime = Carbon::parse($this->input('end_time'));
                     if (!$endTime->gt($startTime)) {
-                        $fail('o valor de '.$attribute.' deve ser maior que Horário de início.');
+                        $fail('o valor de \'Horário termino\' deve ser maior que Horário de início.');
                     }
                 }
             ]

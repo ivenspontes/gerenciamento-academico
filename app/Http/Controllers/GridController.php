@@ -51,7 +51,8 @@ class GridController extends Controller
      */
     public function show(Grid $grid)
     {
-        return view('grid.show', compact(['grid']));
+        $classrooms = Classroom::all();
+        return view('grid.show', compact(['grid', 'classrooms']));
     }
 
     /**

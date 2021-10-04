@@ -15,18 +15,20 @@ class CreateHorariesTable extends Migration
     {
         Schema::create('horaries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('teacher_id');
 
+            $table->string('name', 100);
+
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->foreign('teacher_id')
                 ->references('id')->on('teachers')
                 ->onDelete('SET NULL');
 
-            $table->unsignedBigInteger('discipline_id');
+            $table->unsignedBigInteger('discipline_id')->nullable();
             $table->foreign('discipline_id')
                 ->references('id')->on('disciplines')
                 ->onDelete('SET NULL');
 
-            $table->unsignedBigInteger('grid_id');
+            $table->unsignedBigInteger('grid_id')->nullable();
             $table->foreign('grid_id')
                 ->references('id')->on('grids')
                 ->onDelete('SET NULL');

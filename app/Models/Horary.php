@@ -16,6 +16,7 @@ class Horary extends Model
      * @var string[]
      */
     protected $fillable = [
+        'name',
         'teacher_id',
         'discipline_id',
         'grid_id',

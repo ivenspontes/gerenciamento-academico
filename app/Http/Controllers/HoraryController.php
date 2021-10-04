@@ -56,7 +56,11 @@ class HoraryController extends Controller
      */
     public function show(Horary $horary)
     {
-        return view('horary.show', compact(['horary']));
+        $teachers = Teacher::all();
+        $disciplines = Discipline::all();
+        $grids = Grid::all();
+
+        return view('horary.show', compact(['horary', 'teachers', 'disciplines', 'grids']));
     }
 
     /**
@@ -67,7 +71,11 @@ class HoraryController extends Controller
      */
     public function edit(Horary $horary)
     {
-        return view('horary.edit', compact(['horary']));
+        $teachers = Teacher::all();
+        $disciplines = Discipline::all();
+        $grids = Grid::all();
+
+        return view('horary.edit', compact(['horary', 'teachers', 'disciplines', 'grids']));
     }
 
     /**
