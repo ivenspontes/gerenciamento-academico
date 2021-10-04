@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,6 +26,7 @@ class StudentFactory extends Factory
             'name' => $this->faker->name(),
             'cpf' => $this->faker->unique()->cpf(false),
             'birth_date' => $this->faker->date(),
+            'classroom_id' => Classroom::factory()->create()->id,
         ];
     }
 }

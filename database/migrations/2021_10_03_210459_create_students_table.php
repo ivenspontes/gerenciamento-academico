@@ -18,6 +18,12 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('cpf', 11);
             $table->date('birth_date');
+
+            $table->unsignedBigInteger('classroom_id')->nullable();
+            $table->foreign('classroom_id')
+                ->references('id')->on('classrooms')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

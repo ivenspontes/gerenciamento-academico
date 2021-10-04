@@ -27,6 +27,7 @@ class StudentRequest extends FormRequest
             'name' => 'required|string',
             'cpf' => 'required|string|unique:teachers,cpf|min:11|max:11',
             'birth_date' => 'required|date',
+            'classroom_id' => 'exists:classrooms,id',
         ];
     }
 }

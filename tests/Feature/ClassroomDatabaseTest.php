@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Classroom;
+use App\Models\Student;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -53,19 +54,20 @@ class ClassroomDatabaseTest extends TestCase
         $this->assertDeleted('classrooms', $classroom->only('name'));
     }
 
-    // /**
-    //  * Test if model can attach teacher
-    //  *
-    //  * @return void
-    //  */
-    // public function test_if_teacher_can_attach_classroom()
-    // {
-    //     $discipline = Classroom::factory()->create();
-    //     $teacher = Teacher::factory()->create();
+    /**
+     * Test if model can attach teacher
+     *
+     * @return void
+     */
+    public function test_if_relationship_students_is_working()
+    {
+        $classroom = Classroom::factory()->create();
 
-    //     $discipline->teachers()->attach($teacher);
+        $student = Student::factory(['classroom_id' => null])->make()->toArray();
 
-    //     $this->assertCount(1, $discipline->fresh()->teachers);
-    //     $this->assertTrue($discipline->teachers()->first()->is($teacher));
-    // }
+        $student = $classroom->students()->create($student);
+
+        $this->assertDatabaseHas('students', $student->makeHidden(['created_at','updated_at'])->toArray());
+        $this->assertTrue(($classroom->id == $student->classroom->id));
+    }
 }
