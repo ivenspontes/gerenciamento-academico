@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Discipline;
+use App\Models\Grid;
 use App\Models\Horary;
+use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -75,6 +78,7 @@ class HoraryViewsTest extends TestCase
 
         $view->assertSee($horary->teacher->name);
         $view->assertSee($horary->discipline->name);
+        $view->assertSee($horary->grid->name);
         $view->assertSee($horary->weekday);
         $view->assertSee($horary->start_time);
         $view->assertSee($horary->end_time);
@@ -87,7 +91,11 @@ class HoraryViewsTest extends TestCase
      */
     public function test_if_horary_create_view_can_be_rendered()
     {
-        $view = $this->view('horary.create');
+        $view = $this->view('horary.create', [
+            'teachers' => Teacher::all(),
+            'disciplines' => Discipline::all(),
+            'grids' => Grid::all(),
+        ]);
 
         $view->assertSee('Criar horário');
         $view->assertSee('Disciplina:');

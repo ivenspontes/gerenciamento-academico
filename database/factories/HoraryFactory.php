@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Discipline;
+use App\Models\Grid;
 use App\Models\Horary;
 use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,6 +26,7 @@ class HoraryFactory extends Factory
     {
         $teacher = Teacher::factory()->create();
         $discipline = Discipline::factory()->create();
+        $grid = Grid::factory()->create();
 
         $hora = $this->faker->numberBetween(8,15);
 
@@ -41,6 +43,7 @@ class HoraryFactory extends Factory
         return [
             'discipline_id' => $discipline->id,
             'teacher_id' => $teacher->id,
+            'grid_id' => $grid->id,
             'weekday' => $weekday->random(),
             'start_time' => ($hora<10) ? '0'.$hora.':00' : $hora.':00',
             'end_time' => ($hora+2).':00',

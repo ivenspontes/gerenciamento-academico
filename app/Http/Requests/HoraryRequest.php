@@ -27,6 +27,7 @@ class HoraryRequest extends FormRequest
         return [
             'teacher_id' => 'required|exists:teachers,id',
             'discipline_id' => 'required|exists:disciplines,id',
+            'grid_id' => 'required|exists:grids,id',
             'weekday' => 'required|string|in:Domingo,Segunda-Feira,Terça-Feira,Quarta-Feira,Quinta-Feira,Sexta-Feira,Sábado',
             'start_time' => 'required|date_format:H:i',
             'end_time' => ['required','date_format:H:i',

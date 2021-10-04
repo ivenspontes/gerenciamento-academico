@@ -22,7 +22,7 @@ class CreateStudentsTable extends Migration
             $table->unsignedBigInteger('classroom_id')->nullable();
             $table->foreign('classroom_id')
                 ->references('id')->on('classrooms')
-                ->onDelete('cascade');
+                ->onDelete('SET NULL');
 
             $table->timestamps();
         });

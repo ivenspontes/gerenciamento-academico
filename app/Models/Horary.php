@@ -18,6 +18,7 @@ class Horary extends Model
     protected $fillable = [
         'teacher_id',
         'discipline_id',
+        'grid_id',
         'weekday',
         'start_time',
         'end_time',
@@ -42,5 +43,15 @@ class Horary extends Model
     public function discipline(): BelongsTo
     {
         return $this->belongsTo(Discipline::class);
+    }
+
+    /**
+     * Get the grid that owns the Horary
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function grid(): BelongsTo
+    {
+        return $this->belongsTo(Grid::class);
     }
 }

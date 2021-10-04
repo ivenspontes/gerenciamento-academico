@@ -19,12 +19,17 @@ class CreateHorariesTable extends Migration
 
             $table->foreign('teacher_id')
                 ->references('id')->on('teachers')
-                ->onDelete('cascade');
+                ->onDelete('SET NULL');
 
             $table->unsignedBigInteger('discipline_id');
             $table->foreign('discipline_id')
                 ->references('id')->on('disciplines')
-                ->onDelete('cascade');
+                ->onDelete('SET NULL');
+
+            $table->unsignedBigInteger('grid_id');
+            $table->foreign('grid_id')
+                ->references('id')->on('grids')
+                ->onDelete('SET NULL');
 
             $table->string('weekday');
             $table->time('start_time');

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\HoraryRequest;
+use App\Models\Discipline;
+use App\Models\Grid;
 use App\Models\Horary;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class HoraryController extends Controller
@@ -26,7 +29,11 @@ class HoraryController extends Controller
      */
     public function create()
     {
-        return view('horary.create');
+        $teachers = Teacher::all();
+        $disciplines = Discipline::all();
+        $grids = Grid::all();
+
+        return view('horary.create', compact(['teachers', 'disciplines', 'grids']));
     }
 
     /**
