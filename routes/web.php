@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DisciplineController;
+use App\Http\Controllers\GridController;
 use App\Http\Controllers\HoraryController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -47,4 +48,9 @@ Route::resource('student', StudentController::class)
 Route::resource('classroom', ClassroomController::class)
 ->missing(function (Request $request) {
     return Redirect::route('classroom.index');
+});
+
+Route::resource('grid', GridController::class)
+->missing(function (Request $request) {
+    return Redirect::route('grid.index');
 });
