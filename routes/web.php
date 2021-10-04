@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\HoraryController;
 use App\Http\Controllers\StudentController;
@@ -41,4 +42,9 @@ Route::resource('horary', HoraryController::class)
 Route::resource('student', StudentController::class)
 ->missing(function (Request $request) {
     return Redirect::route('student.index');
+});
+
+Route::resource('classroom', ClassroomController::class)
+->missing(function (Request $request) {
+    return Redirect::route('classroom.index');
 });
