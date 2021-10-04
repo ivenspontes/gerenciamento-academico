@@ -23,8 +23,10 @@ class DisciplineRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->segment(2);
+
         return [
-            'name' => 'required|string|max:100|unique:disciplines,name'
+            'name' => 'required|string|max:100|unique:disciplines,name,'.$id.',id'
         ];
     }
 }

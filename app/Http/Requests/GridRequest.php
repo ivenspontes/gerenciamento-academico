@@ -23,8 +23,10 @@ class GridRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->segment(2);
+
         return [
-            'name' => 'required',
+            'name' => 'required|unique:grids,name,,'.$id.',id',
             'classroom_id' => 'required|exists:classrooms,id',
         ];
     }

@@ -24,8 +24,10 @@ class HoraryRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->segment(2);
+
         return [
-            'name' => 'required|unique:horaries,name,except,id',
+            'name' => 'required|unique:horaries,name,,'.$id.',id',
             'teacher_id' => 'required|exists:teachers,id',
             'discipline_id' => 'required|exists:disciplines,id',
             'grid_id' => 'required|exists:grids,id',
