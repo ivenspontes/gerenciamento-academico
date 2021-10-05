@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequest;
+use App\Models\Discipline;
 use App\Models\Teacher;
 
 class TeacherController extends Controller
@@ -25,7 +26,8 @@ class TeacherController extends Controller
     */
     public function create()
     {
-        return view('teacher.create');
+        $disciplines = Discipline::all();
+        return view('teacher.create', compact(['disciplines']));
     }
 
     /**
@@ -37,6 +39,12 @@ class TeacherController extends Controller
     public function store(TeacherRequest $request)
     {
         $teacher = Teacher::create($request->validated());
+
+        if ($request->has('disciplines')) {
+            $teacher->disciplines()->sync($request->disciplines);
+        } else {
+            $teacher->disciplines()->sync([]);
+        }
         return redirect()->route('teacher.index');
     }
 
@@ -48,7 +56,8 @@ class TeacherController extends Controller
     */
     public function show(Teacher $teacher)
     {
-        return view('teacher.show', compact('teacher'));
+        $disciplines = Discipline::all();
+        return view('teacher.show', compact('teacher', 'disciplines'));
     }
 
     /**
@@ -59,7 +68,8 @@ class TeacherController extends Controller
     */
     public function edit(Teacher $teacher)
     {
-        return view('teacher.edit', compact('teacher'));
+        $disciplines = Discipline::all();
+        return view('teacher.edit', compact('teacher', 'disciplines'));
     }
 
     /**
@@ -72,6 +82,13 @@ class TeacherController extends Controller
     public function update(TeacherRequest $request, Teacher $teacher)
     {
         $teacher->update($request->validated());
+
+        if ($request->has('disciplines')) {
+            $teacher->disciplines()->sync($request->disciplines);
+        } else {
+            $teacher->disciplines()->sync([]);
+        }
+
         return back();
     }
 

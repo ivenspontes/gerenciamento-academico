@@ -9,6 +9,7 @@
             <h3 class="card-title">Horários</h3>
 
             <div class="card-tools">
+                <a class="btn btn-primary btn-xs" href="{{ route('horary.create') }}">Criar</a>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -31,6 +32,7 @@
                     </thead>
                     <tbody>
                         @foreach ($horaries as $horary)
+                        <tr>
                             <td>{{$horary->name }}</td>
                             <td>{{$horary->teacher->name }}</td>
                             <td>{{$horary->discipline->name }}</td>
@@ -44,10 +46,15 @@
                                 <a class="btn btn-xs btn-warning" href="{{ route('horary.edit',$horary->id) }}"><i
                                         class="fas fa-edit"></i></a>
 
-                                {{-- FIX THIS --}}
-                                <a class="btn btn-xs btn-danger" href="{{ route('horary.destroy',$horary->id) }}"><i
-                                        class="fas fa-times-circle"></i></a>
+                            <form method='post' action="{{ route('horary.destroy', $horary->id) }}" style="display:inline">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-xs">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </form>
                             </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

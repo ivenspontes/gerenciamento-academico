@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
+use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $classrooms = Classroom::all();
+        return view('student.create', compact(['classrooms']));
     }
 
     /**
@@ -60,7 +62,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('student.edit', compact(['student']));
+        $classrooms = Classroom::all();
+        return view('student.edit', compact(['student', 'classrooms']));
     }
 
     /**

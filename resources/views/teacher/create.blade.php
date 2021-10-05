@@ -37,6 +37,14 @@
                     <input class="form-control form-control-lg" type="date" name="birth_date" value="{{ old('birth_date') }}">
                 </div>
             </div>
+
+            <label class="form-label">Disciplinas:</label>
+            @foreach ($disciplines as $discipline)
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" value="{{ $discipline->id }}" name="disciplines[]" id="check{{ $discipline->id }}">
+                    <label class="form-check-label" for="check{{ $discipline->id }}">{{ $discipline->name }}</label>
+                </div>
+            @endforeach
             <div class="text-center mt-3">
                 {{-- <a href="index.html" class="btn btn-lg btn-primary">Criar</a> --}}
                 <button type="submit" class="btn btn-lg btn-primary">Criar</button>

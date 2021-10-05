@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DisciplineRequest;
 use App\Models\Discipline;
+use App\Models\Teacher;
 
 class DisciplineController extends Controller
 {
@@ -25,7 +26,8 @@ class DisciplineController extends Controller
      */
     public function create()
     {
-        return view('discipline.create');
+        $teachers = Teacher::all();
+        return view('discipline.create', compact(['teachers']));
     }
 
     /**
@@ -37,6 +39,12 @@ class DisciplineController extends Controller
     public function store(DisciplineRequest $request)
     {
         $discipline = Discipline::create($request->validated());
+
+        if ($request->has('teachers')) {
+            $discipline->teachers()->sync($request->teachers);
+        } else {
+            $discipline->teachers()->sync([]);
+        }
         return back();
     }
 
@@ -59,7 +67,8 @@ class DisciplineController extends Controller
      */
     public function edit(Discipline $discipline)
     {
-        return view('discipline.edit', compact(['discipline']));
+        $teachers = Teacher::all();
+        return view('discipline.edit', compact(['discipline', 'teachers']));
     }
 
     /**
@@ -72,6 +81,11 @@ class DisciplineController extends Controller
     public function update(DisciplineRequest $request, Discipline $discipline)
     {
         $discipline->update($request->validated());
+        if ($request->has('teachers')) {
+            $discipline->teachers()->sync($request->teachers);
+        } else {
+            $discipline->teachers()->sync([]);
+        }
         return back();
     }
 

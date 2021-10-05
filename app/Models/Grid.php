@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Grid extends Model
 {
@@ -28,5 +29,15 @@ class Grid extends Model
     public function classroom(): BelongsTo
     {
         return $this->belongsTo(Classroom::class);
+    }
+
+    /**
+     * Get all of the horaries for the Grid
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function horaries(): HasMany
+    {
+        return $this->hasMany(Horary::class);
     }
 }

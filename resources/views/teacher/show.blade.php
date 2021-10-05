@@ -34,10 +34,29 @@
                 <label class="form-label">Data de nascimento:</label>
                 <input class="form-control form-control-lg" type="date" name="birth_date" value="{{ $teacher->birth_date }}" disabled>
             </div>
+
+            {{-- {{  }} --}}
+
+            <label class="form-label">Disciplinas:</label>
+            @foreach ($teacher->disciplines as $discipline)
+                <div class="col-12">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="{{ $discipline->id }}" name="disciplines[]" id="check{{ $discipline->id }}" disabled checked="">
+                        <label class="form-check-label" for="check{{ $discipline->id }}">{{ $discipline->name }}</label>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
     <!-- /.card-body -->
 </div>
 <!-- /.card -->
+
+{{-- {{ dd($teacher->horaries->groupBy('grid_id')) }} --}}
+
+@foreach ($teacher->horaries->groupBy('grid_id') as $horary)
+    {{ $horary }}
+@endforeach
+{{-- {{ dd($teacher->horaries) }} --}}
 
 @endsection

@@ -25,8 +25,16 @@
                 <label class="form-label">Nome:</label>
                 <input class="form-control form-control-lg" type="text" name="name" value="{{ old('name') }}">
             </div>
+
+            <label class="form-label">Professores:</label>
+            @foreach ($teachers as $teacher)
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" value="{{ $teacher->id }}" name="teachers[]" id="check{{ $teacher->id }}">
+                    <label class="form-check-label" for="check{{ $teacher->id }}">{{ $teacher->name }}</label>
+                </div>
+            @endforeach
+
             <div class="text-center mt-3">
-                {{-- <a href="index.html" class="btn btn-lg btn-primary">Criar</a> --}}
                 <button type="submit" class="btn btn-lg btn-primary">Criar</button>
             </div>
         </form>

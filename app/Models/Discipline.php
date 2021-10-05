@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Discipline extends Model
 {
@@ -28,4 +29,16 @@ class Discipline extends Model
     {
         return $this->belongsToMany(Teacher::class, 'teacher_discipline');
     }
+
+    /**
+     * Get all of the horaries for the Discipline
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function horaries(): HasMany
+    {
+        return $this->hasMany(Horary::class);
+    }
+
+
 }

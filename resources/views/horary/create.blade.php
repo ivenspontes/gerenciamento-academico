@@ -31,7 +31,8 @@
                 <select class="form-control" name="teacher_id" id="teacher_id">
                     @foreach ($teachers as $teacher)
                         <option value="" selected="selected">Escolha...</option>
-                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                        <option value="{{ $teacher->id }}" {{ (old("teacher_id") == $teacher->id ? "selected":"") }}>{{ $teacher->name }}</option>
+
                     @endforeach
                 </select>
             </div>
@@ -41,7 +42,7 @@
                 <select class="form-control" name="discipline_id" id="discipline_id">
                     @foreach ($disciplines as $discipline)
                         <option value="" selected="selected">Escolha...</option>
-                        <option value="{{ $discipline->id }}">{{ $discipline->name }}</option>
+                        <option value="{{ $discipline->id }}" {{ (old("discipline_id") == $discipline->id ? "selected":"") }}>{{ $discipline->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -49,9 +50,9 @@
             <div class="mb-3">
                 <label class="form-label">Grade:</label>
                 <select class="form-control" name="grid_id" id="grid_id">
-                    @foreach ($grids as $grids)
+                    @foreach ($grids as $grid)
                         <option value="" selected="selected">Escolha...</option>
-                        <option value="{{ $grids->id }}">{{ $grids->name }}</option>
+                        <option value="{{ $grid->id }}" {{ (old("grid_id") == $grid->id ? "selected":"") }}>{{ $grid->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -60,13 +61,13 @@
                 <label class="form-label">Dia da semana:</label>
                 <select class="form-control" name="weekday" id="weekday">
                     <option value="" selected="selected">Escolha...</option>
-                    <option value="Domingo">Domingo</option>
-                    <option value="Segunda-Feira">Segunda-Feira</option>
-                    <option value="Terça-Feira">Terça-Feira</option>
-                    <option value="Quarta-Feira">Quarta-Feira</option>
-                    <option value="Quinta-Feira">Quinta-Feira</option>
-                    <option value="Sexta-Feira">Sexta-Feira</option>
-                    <option value="Sábado">Sábado</option>
+                    <option value="Domingo" {{ (old("weekday") == 'Domingo' ? "selected":"") }}>Domingo</option>
+                    <option value="Segunda-Feira" {{ (old("weekday") == 'Segunda-Feira' ? "selected":"") }}>Segunda-Feira</option>
+                    <option value="Terça-Feira" {{ (old("weekday") == 'Terça-Feira' ? "selected":"") }}>Terça-Feira</option>
+                    <option value="Quarta-Feira" {{ (old("weekday") == 'Quarta-Feira' ? "selected":"") }}>Quarta-Feira</option>
+                    <option value="Quinta-Feira" {{ (old("weekday") == 'Quinta-Feira' ? "selected":"") }}>Quinta-Feira</option>
+                    <option value="Sexta-Feira" {{ (old("weekday") == 'Sexta-Feira' ? "selected":"") }}>Sexta-Feira</option>
+                    <option value="Sábado" {{ (old("weekday") == 'Sábado' ? "selected":"") }}>Sábado</option>
                 </select>
             </div>
 
@@ -77,7 +78,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Horário termino:</label>
-                <input class="form-control form-control-lg" type="time" name="end_time" value="{{ old('name') }}">
+                <input class="form-control form-control-lg" type="time" name="end_time" value="{{ old('end_time') }}">
             </div>
             <div class="text-center mt-3">
                 <button type="submit" class="btn btn-lg btn-primary">Criar</button>
