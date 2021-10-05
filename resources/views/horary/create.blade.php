@@ -29,8 +29,8 @@
             <div class="mb-3">
                 <label class="form-label">Professor:</label>
                 <select class="form-control" name="teacher_id" id="teacher_id">
+                    <option value="" selected="selected">Escolha...</option>
                     @foreach ($teachers as $teacher)
-                        <option value="" selected="selected">Escolha...</option>
                         <option value="{{ $teacher->id }}" {{ (old("teacher_id") == $teacher->id ? "selected":"") }}>{{ $teacher->name }}</option>
 
                     @endforeach
@@ -40,8 +40,8 @@
             <div class="mb-3">
                 <label class="form-label">Disciplina:</label>
                 <select class="form-control" name="discipline_id" id="discipline_id">
+                    <option value="" selected="selected">Escolha...</option>
                     @foreach ($disciplines as $discipline)
-                        <option value="" selected="selected">Escolha...</option>
                         <option value="{{ $discipline->id }}" {{ (old("discipline_id") == $discipline->id ? "selected":"") }}>{{ $discipline->name }}</option>
                     @endforeach
                 </select>
@@ -50,8 +50,8 @@
             <div class="mb-3">
                 <label class="form-label">Grade:</label>
                 <select class="form-control" name="grid_id" id="grid_id">
+                    <option value="" selected="selected">Escolha...</option>
                     @foreach ($grids as $grid)
-                        <option value="" selected="selected">Escolha...</option>
                         <option value="{{ $grid->id }}" {{ (old("grid_id") == $grid->id ? "selected":"") }}>{{ $grid->name }}</option>
                     @endforeach
                 </select>

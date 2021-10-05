@@ -27,24 +27,25 @@
                     </thead>
                     <tbody>
                         @foreach ($grids as $grid)
-                        <tr>
-                            <td>{{ $grid->name }}</td>
-                            <td>{{ $grid->classroom->name }}</td>
-                            <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route('grid.show', $grid->id) }}"><i
-                                        class="fas fa-eye"></i></a>
-                                <a class="btn btn-xs btn-warning" href="{{ route('grid.edit', $grid->id) }}"><i
-                                        class="fas fa-edit"></i></a>
+                            <tr>
+                                <td>{{ $grid->name }}</td>
+                                <td>{{ $grid->classroom->name }}</td>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('grid.show', $grid->id) }}"><i
+                                            class="fas fa-eye"></i></a>
+                                    <a class="btn btn-xs btn-warning" href="{{ route('grid.edit', $grid->id) }}"><i
+                                            class="fas fa-edit"></i></a>
 
-                                <form method='post' action="{{ route('grid.destroy', $grid->id) }}" style="display:inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                        <i class="fas fa-times-circle"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                    <form method='post' action="{{ route('grid.destroy', $grid->id) }}"
+                                        style="display:inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <i class="fas fa-times-circle"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
