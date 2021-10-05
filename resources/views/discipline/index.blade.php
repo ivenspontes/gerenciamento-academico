@@ -38,9 +38,14 @@
                                             class="fas fa-edit"></i></a>
 
                                     {{-- FIX THIS --}}
-                                    <a class="btn btn-xs btn-danger"
-                                        href="{{ route('discipline.destroy', $discipline->id) }}"><i
-                                            class="fas fa-times-circle"></i></a>
+                                    <form method='post' action="{{ route('discipline.destroy', $discipline->id) }}"
+                                        style="display:inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <i class="fas fa-times-circle"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

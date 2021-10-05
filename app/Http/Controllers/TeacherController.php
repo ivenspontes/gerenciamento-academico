@@ -110,7 +110,7 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
-        flash('Professor deletado com sucesso!')->success();
+        flash('Professor deletado com sucesso!')->error();
         return back();
     }
 }

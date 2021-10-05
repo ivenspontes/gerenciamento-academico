@@ -90,7 +90,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        flash('Estudante deletado com sucesso!')->danger();
+        flash('Estudante deletado com sucesso!')->error();
         return back();
     }
 }

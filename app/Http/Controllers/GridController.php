@@ -54,9 +54,12 @@ class GridController extends Controller
     {
         // order grids by days
         $gridsWeek = $grid->horaries->sortBy(['weekday','start_time'])->groupBy('weekday')->toArray();
-        $sunday = $gridsWeek['Domingo'];
-        unset($gridsWeek['Domingo']);
-        $gridsWeek['Domingo'] = $sunday;
+
+        if ($gridsWeek) {
+            $sunday = $gridsWeek['Domingo'];
+            unset($gridsWeek['Domingo']);
+            $gridsWeek['Domingo'] = $sunday;
+        }
 
         $classrooms = Classroom::all();
         return view('grid.show', compact(['grid', 'classrooms', 'gridsWeek']));
@@ -69,8 +72,8 @@ class GridController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Grid $grid)
-    {
-        return view('grid.edit', compact(['grid']));
+    {   $classrooms = Classroom::all();
+        return view('grid.edit', compact(['grid', 'classrooms']));
     }
 
     /**
@@ -96,7 +99,7 @@ class GridController extends Controller
     public function destroy(Grid $grid)
     {
         $grid->delete();
-        flash('Grade deletada com sucesso!')->danger();
+        flash('Grade deletada com sucesso!')->error();
         return back();
     }
 }

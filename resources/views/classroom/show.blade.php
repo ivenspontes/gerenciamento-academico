@@ -24,8 +24,8 @@
 
             <div class="mb-3">
                 <label class="form-label">Grade:</label>
-                <input class="form-control form-control-lg" type="text" name="name" value="{{ $classroom->grid->name }}"
-                    disabled>
+                <input class="form-control form-control-lg" type="text" name="name"
+                    value="{{ $classroom->grid ? $classroom->grid->name : '' }}" disabled>
             </div>
         </div>
 
@@ -34,72 +34,78 @@
     </div>
     <!-- /.card -->
 
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Grade de horario</h3>
+    @if ($gridsWeek)
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Grade de horario</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            @foreach ($gridsWeek as $key => $value)
-                <h4>{{ $key }}</h4>
-                <table class="table table-hover my-0">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Professor</th>
-                            <th>Disciplina</th>
-                            <th>Grade</th>
-                            <th>Dia da semana</th>
-                            <th>Inicio</th>
-                            <th>Termino</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{-- {{ dd($classroom->grid->horaries->groupBy('weekday')) }} --}}
-
-                        @foreach ($value as $horary)
+            <div class="card-body">
+                @foreach ($gridsWeek as $key => $value)
+                    <h4>{{ $key }}</h4>
+                    <table class="table table-hover my-0">
+                        <thead>
                             <tr>
-                                <td>{{ $horary['name'] }}</td>
-                                <td>{{ \App\Models\Teacher::find($horary['teacher_id'])->name }}</td>
-                                <td>{{ \App\Models\Discipline::find($horary['discipline_id'])->name }}</td>
-                                <td>{{ \App\Models\Grid::find($horary['grid_id'])->name }}</td>
-                                <td>{{ $horary['weekday'] }}</td>
-                                <td>{{ $horary['start_time'] }}</td>
-                                <td>{{ $horary['end_time'] }}</td>
-
-                                <td>
-                                    <a class="btn btn-xs btn-primary"
-                                        href="{{ route('student.show', $horary['id']) }}"><i
-                                            class="fas fa-eye"></i></a>
-                                    <a class="btn btn-xs btn-warning"
-                                        href="{{ route('student.edit', $horary['id']) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                    <form method='post' action="{{ route('horary.destroy', $horary['id']) }}"
-                                        style="display:inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-xs">
-                                            <i class="fas fa-times-circle"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                <th>Nome</th>
+                                <th>Professor</th>
+                                <th>Disciplina</th>
+                                <th>Grade</th>
+                                <th>Dia da semana</th>
+                                <th>Inicio</th>
+                                <th>Termino</th>
+                                <th>#</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
+                            {{-- {{ dd($classroom->grid->horaries->groupBy('weekday')) }} --}}
 
-                    </tbody>
-                </table>
-            @endforeach
+                            @foreach ($value as $horary)
+                                <tr>
+                                    <td>{{ $horary['name'] }}</td>
+                                    <td>{{ \App\Models\Teacher::find($horary['teacher_id'])->name }}</td>
+                                    <td>{{ \App\Models\Discipline::find($horary['discipline_id'])->name }}</td>
+                                    <td>{{ \App\Models\Grid::find($horary['grid_id'])->name }}</td>
+                                    <td>{{ $horary['weekday'] }}</td>
+                                    <td>{{ $horary['start_time'] }}</td>
+                                    <td>{{ $horary['end_time'] }}</td>
+
+                                    <td>
+                                        <a class="btn btn-xs btn-primary"
+                                            href="{{ route('student.show', $horary['id']) }}"><i
+                                                class="fas fa-eye"></i></a>
+                                        <a class="btn btn-xs btn-warning"
+                                            href="{{ route('student.edit', $horary['id']) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        <form method='post' action="{{ route('horary.destroy', $horary['id']) }}"
+                                            style="display:inline">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-xs">
+                                                <i class="fas fa-times-circle"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                @endforeach
+            </div>
+
+            <!-- /.card-body -->
         </div>
+        <!-- /.card -->
 
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
+    @endif
+
+
 
     <div class="card">
         <div class="card-header">
@@ -152,107 +158,116 @@
     </div>
     <!-- /.card -->
 
+    @if ($teachers)
 
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Professores</h3>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Professores</h3>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-hover my-0">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Data nascimento</th>
-                        <th>#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($teachers as $teacher)
-
+            <div class="card-body">
+                <table class="table table-hover my-0">
+                    <thead>
                         <tr>
-                            <td>{{ $teacher->name }}</td>
-                            <td>{{ $teacher->cpf }}</td>
-                            <td>{{ $teacher->birth_date }}</td>
-
-                            <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route('teacher.show', $teacher->id) }}"><i
-                                        class="fas fa-eye"></i></a>
-                                <a class="btn btn-xs btn-warning" href="{{ route('teacher.edit', $teacher->id) }}"><i
-                                        class="fas fa-edit"></i></a>
-
-                                <form method='post' action="{{ route('horary.destroy', $teacher->id) }}"
-                                    style="display:inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                        <i class="fas fa-times-circle"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Data nascimento</th>
+                            <th>#</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
+                    </thead>
+                    <tbody>
+                        @foreach ($teachers as $teacher)
 
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Disciplinas</h3>
+                            <tr>
+                                <td>{{ $teacher->name }}</td>
+                                <td>{{ $teacher->cpf }}</td>
+                                <td>{{ $teacher->birth_date }}</td>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('teacher.show', $teacher->id) }}"><i
+                                            class="fas fa-eye"></i></a>
+                                    <a class="btn btn-xs btn-warning" href="{{ route('teacher.edit', $teacher->id) }}"><i
+                                            class="fas fa-edit"></i></a>
+
+                                    <form method='post' action="{{ route('horary.destroy', $teacher->id) }}"
+                                        style="display:inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <i class="fas fa-times-circle"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
+            <!-- /.card-body -->
         </div>
-        <div class="card-body">
-            <table class="table table-hover my-0">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($disciplines as $discipline)
+        <!-- /.card -->
 
-                        <tr>
-                            <td>{{ $discipline->name }}</td>
+    @endif
 
-                            <td>
-                                <a class="btn btn-xs btn-primary"
-                                    href="{{ route('discipline.show', $discipline->id) }}"><i
-                                        class="fas fa-eye"></i></a>
-                                <a class="btn btn-xs btn-warning"
-                                    href="{{ route('discipline.edit', $discipline->id) }}"><i
-                                        class="fas fa-edit"></i></a>
+@if ($disciplines)
 
-                                <form method='post' action="{{ route('horary.destroy', $discipline->id) }}"
-                                    style="display:inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                        <i class="fas fa-times-circle"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Disciplinas</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
         </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
+    <div class="card-body">
+        <table class="table table-hover my-0">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($disciplines as $discipline)
+
+                    <tr>
+                        <td>{{ $discipline->name }}</td>
+
+                        <td>
+                            <a class="btn btn-xs btn-primary"
+                                href="{{ route('discipline.show', $discipline->id) }}"><i
+                                    class="fas fa-eye"></i></a>
+                            <a class="btn btn-xs btn-warning"
+                                href="{{ route('discipline.edit', $discipline->id) }}"><i
+                                    class="fas fa-edit"></i></a>
+
+                            <form method='post' action="{{ route('horary.destroy', $discipline->id) }}"
+                                style="display:inline">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-xs">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+@endif
+
+
 
 @endsection

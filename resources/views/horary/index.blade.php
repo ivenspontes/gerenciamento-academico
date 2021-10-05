@@ -34,9 +34,9 @@
                         @foreach ($horaries as $horary)
                             <tr>
                                 <td>{{ $horary->name }}</td>
-                                <td>{{ $horary->teacher->name }}</td>
-                                <td>{{ $horary->discipline->name }}</td>
-                                <td>{{ $horary->grid->name }}</td>
+                                <td>{{ ($horary->teacher) ? $horary->teacher->name : '' }}</td>
+                                <td>{{ ($horary->discipline) ? $horary->discipline->name : '' }}</td>
+                                <td>{{ ($horary->grid) ? $horary->grid->name : '' }}</td>
                                 <td>{{ $horary->weekday }}</td>
                                 <td>{{ $horary->start_time }}</td>
                                 <td>{{ $horary->end_time }}</td>

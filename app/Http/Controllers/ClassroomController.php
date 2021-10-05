@@ -8,6 +8,8 @@ use App\Models\Discipline;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isNull;
+
 class ClassroomController extends Controller
 {
     /**
@@ -53,22 +55,32 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         $grid = $classroom->grid;
-        $teachersGroup = $grid->horaries->groupBy('teacher_id');
-        $disciplinesGroup = $grid->horaries->groupBy('discipline_id');
 
-        foreach ($teachersGroup as $key => $value) {
-            $teachers[] = Teacher::find($key);
+        $teachers = null;
+        $disciplines = null;
+        $gridsWeek = null;
+
+        if (!is_null($grid)) {
+            $teachersGroup = $grid->horaries->groupBy('teacher_id');
+            $disciplinesGroup = $grid->horaries->groupBy('discipline_id');
+            foreach ($teachersGroup as $key => $value) {
+                $teachers[] = Teacher::find($key);
+            }
+
+            foreach ($disciplinesGroup as $key => $value) {
+                $disciplines[] = Discipline::find($key);
+            }
+
+            // order grids by days
+            $gridsWeek = $classroom->grid->horaries->sortBy(['weekday', 'start_time'])->groupBy('weekday')->toArray();
+            if ($gridsWeek) {
+                $sunday = $gridsWeek['Domingo'];
+                unset($gridsWeek['Domingo']);
+                $gridsWeek['Domingo'] = $sunday;
+            }
         }
 
-        foreach ($disciplinesGroup as $key => $value) {
-            $disciplines[] = Discipline::find($key);
-        }
 
-        // order grids by days
-        $gridsWeek = $classroom->grid->horaries->sortBy(['weekday', 'start_time'])->groupBy('weekday')->toArray();
-        $sunday = $gridsWeek['Domingo'];
-        unset($gridsWeek['Domingo']);
-        $gridsWeek['Domingo'] = $sunday;
 
         return view('classroom.show', compact(['classroom', 'teachers', 'disciplines', 'gridsWeek']));
     }
@@ -107,7 +119,7 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom)
     {
         $classroom->delete();
-        flash('Turma deletada com sucesso!')->danger();
+        flash('Turma deletada com sucesso!')->error();
         return back();
     }
 }

@@ -100,7 +100,7 @@ class DisciplineController extends Controller
     public function destroy(Discipline $discipline)
     {
         $discipline->delete();
-        flash('Disciplina deletada com sucesso!')->danger();
+        flash('Disciplina deletada com sucesso!')->error();
         return back();
     }
 }

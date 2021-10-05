@@ -31,16 +31,21 @@ class HoraryRequest extends FormRequest
 
         print($this->input('teacher_id'));
 
-        if ($this->input('teacher_id')) {
-            $teacher = Teacher::find($this->input('teacher_id'));
-
-            $disciplines = $teacher->disciplines()->pluck('id')->toArray();
-        }
-
         return [
             'name' => 'required|unique:horaries,name,' . $id . ',id',
             'teacher_id' => 'required|exists:teachers,id',
-            'discipline_id' => 'required|exists:disciplines,id' . ($this->input('teacher_id')) ? '|in:'.implode(" ", $disciplines) : '',
+            'discipline_id' => ['required','exists:disciplines,id',
+                function ($attribute, $value, $fail) {
+                    $teacher = Teacher::find($this->input('teacher_id'));
+
+                    $disciplines = $teacher->disciplines()->where('discipline_id', $value)->get();
+
+                    if (!$disciplines) {
+                        $fail('Professor não associado a essa disciplina.');
+                    }
+                }
+            ],
+        // . ($this->input('teacher_id')) ? '|in:'.implode(" ", $disciplines) : '',
             'grid_id' => [
                 'required', 'exists:grids,id',
                 function ($attribute, $value, $fail) {
@@ -55,18 +60,18 @@ class HoraryRequest extends FormRequest
                                 $endTimeExist = Carbon::parse($horary->end_time);
                                 if ($horary->weekday == $this->input('weekday')) {
                                     if ($startTime->between($startTimeExist, $endTimeExist) || $endTime->between($startTimeExist, $endTimeExist)) {
-                                        $fail('Existe um conflite de horarios nessa grade.');
+                                        $fail('Existe um conflito de horarios nessa grade.');
                                     }
                                 }
                             }
-                        } else {
-                            foreach ($grid->horaries as $horary) {
-                                $startTimeExist = Carbon::parse($horary->start_time);
-                                $endTimeExist = Carbon::parse($horary->end_time);
-                                if ($horary->weekday == $this->input('weekday')) {
-                                    if ($startTime->between($startTimeExist, $endTimeExist) || $endTime->between($startTimeExist, $endTimeExist)) {
-                                        $fail('Existe um conflite de horarios nessa grade.');
-                                    }
+                        }
+                    } else {
+                        foreach ($grid->horaries as $horary) {
+                            $startTimeExist = Carbon::parse($horary->start_time);
+                            $endTimeExist = Carbon::parse($horary->end_time);
+                            if ($horary->weekday == $this->input('weekday')) {
+                                if ($startTime->between($startTimeExist, $endTimeExist) || $endTime->between($startTimeExist, $endTimeExist)) {
+                                    $fail('Existe um conflito de horarios nessa grade.');
                                 }
                             }
                         }
@@ -74,9 +79,9 @@ class HoraryRequest extends FormRequest
                 }
             ],
             'weekday' => 'required|string|in:Domingo,Segunda-Feira,Terça-Feira,Quarta-Feira,Quinta-Feira,Sexta-Feira,Sábado',
-            'start_time' => 'required|date_format:H:i',
+            'start_time' => 'required',
             'end_time' => [
-                'required', 'date_format:H:i',
+                'required',
                 function ($attribute, $value, $fail) {
                     $startTime = Carbon::parse($this->input('start_time'));
                     $endTime = Carbon::parse($this->input('end_time'));

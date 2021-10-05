@@ -102,7 +102,7 @@ class HoraryController extends Controller
     public function destroy(Horary $horary)
     {
         $horary->delete();
-        flash('Horário deletado com sucesso!')->danger();
+        flash('Horário deletado com sucesso!')->error();
         return back();
     }
 }
