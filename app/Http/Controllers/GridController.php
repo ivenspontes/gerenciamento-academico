@@ -40,6 +40,7 @@ class GridController extends Controller
     public function store(GridRequest $request)
     {
         Grid::create($request->validated());
+        flash('Grade criada com sucesso!')->success();
         return back();
     }
 
@@ -76,6 +77,7 @@ class GridController extends Controller
     public function update(GridRequest $request, Grid $grid)
     {
         $grid->update($request->validated());
+        flash('Grade editada com sucesso!')->success();
         return back();
     }
 
@@ -88,6 +90,7 @@ class GridController extends Controller
     public function destroy(Grid $grid)
     {
         $grid->delete();
+        flash('Grade deletada com sucesso!')->danger();
         return back();
     }
 }

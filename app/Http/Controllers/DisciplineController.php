@@ -45,6 +45,7 @@ class DisciplineController extends Controller
         } else {
             $discipline->teachers()->sync([]);
         }
+        flash('Disciplina criada com sucesso!')->success();
         return back();
     }
 
@@ -86,6 +87,7 @@ class DisciplineController extends Controller
         } else {
             $discipline->teachers()->sync([]);
         }
+        flash('Disciplina editada com sucesso!')->success();
         return back();
     }
 
@@ -98,6 +100,7 @@ class DisciplineController extends Controller
     public function destroy(Discipline $discipline)
     {
         $discipline->delete();
+        flash('Disciplina deletada com sucesso!')->danger();
         return back();
     }
 }

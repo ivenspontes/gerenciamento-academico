@@ -45,6 +45,7 @@ class HoraryController extends Controller
     public function store(HoraryRequest $request)
     {
         $horary = Horary::create($request->validated());
+        flash('Horário criado com sucesso!')->success();
         return back();
     }
 
@@ -88,6 +89,7 @@ class HoraryController extends Controller
     public function update(HoraryRequest $request, Horary $horary)
     {
         $horary->update($request->validated());
+        flash('Horário editado com sucesso!')->success();
         return back();
     }
 
@@ -100,6 +102,7 @@ class HoraryController extends Controller
     public function destroy(Horary $horary)
     {
         $horary->delete();
+        flash('Horário deletado com sucesso!')->danger();
         return back();
     }
 }

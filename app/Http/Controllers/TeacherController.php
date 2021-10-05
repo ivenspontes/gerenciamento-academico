@@ -45,6 +45,7 @@ class TeacherController extends Controller
         } else {
             $teacher->disciplines()->sync([]);
         }
+        flash('Professor criado com sucesso!')->success();
         return redirect()->route('teacher.index');
     }
 
@@ -89,6 +90,7 @@ class TeacherController extends Controller
             $teacher->disciplines()->sync([]);
         }
 
+        flash('Professor editado com sucesso!')->success();
         return back();
     }
 
@@ -101,6 +103,7 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
+        flash('Professor deletado com sucesso!')->success();
         return back();
     }
 }

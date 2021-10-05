@@ -38,6 +38,7 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request)
     {
         Classroom::create($request->validated());
+        flash('Turma criada com sucesso!')->success();
         return back();
     }
 
@@ -73,6 +74,7 @@ class ClassroomController extends Controller
     public function update(ClassroomRequest $request, Classroom $classroom)
     {
         $classroom->update($request->validated());
+        flash('Turma editada com sucesso!')->success();
         return back();
     }
 
@@ -85,6 +87,7 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom)
     {
         $classroom->delete();
+        flash('Turma deletada com sucesso!')->danger();
         return back();
     }
 }

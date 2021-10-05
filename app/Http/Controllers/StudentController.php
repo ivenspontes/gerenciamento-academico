@@ -40,6 +40,7 @@ class StudentController extends Controller
     public function store(StudentRequest $request)
     {
         Student::create($request->validated());
+        flash('Estudante criado com sucesso!')->success();
         return back();
     }
 
@@ -76,6 +77,7 @@ class StudentController extends Controller
     public function update(StudentRequest $request, Student $student)
     {
         $student->update($request->validated());
+        flash('Estudante editado com sucesso!')->success();
         return back();
     }
 
@@ -88,6 +90,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
+        flash('Estudante deletado com sucesso!')->danger();
         return back();
     }
 }
