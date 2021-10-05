@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="card-body">
-            @if($teachers->count())
+            @if ($teachers->count())
                 <table class="table table-hover my-0">
                     <thead>
                         <tr>

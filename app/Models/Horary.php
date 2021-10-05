@@ -25,7 +25,6 @@ class Horary extends Model
         'end_time',
     ];
 
-
     /**
      * Get the teacher that owns the Horary
      *

@@ -66,6 +66,12 @@
     <!-- AdminLTE for demo purposes -->
     {{-- <script src="assets/adminlte/dist/js/demo.js"></script> --}}
 
+    <!-- Laravel Javascript Validation -->
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+
+    @yield('js')
+
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>

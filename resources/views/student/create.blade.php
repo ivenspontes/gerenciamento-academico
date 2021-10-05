@@ -73,3 +73,7 @@
     @endisset
 
 @endsection
+
+@section('js')
+    {!! JsValidator::formRequest('App\Http\Requests\StudentRequest') !!}
+@endsection

@@ -29,14 +29,18 @@ class HoraryRequest extends FormRequest
     {
         $id = $this->segment(2);
 
-        $teacher = Teacher::find($this->input('teacher_id'));
+        print($this->input('teacher_id'));
 
-        $disciplines = $teacher->disciplines()->pluck('id')->toArray();
+        if ($this->input('teacher_id')) {
+            $teacher = Teacher::find($this->input('teacher_id'));
+
+            $disciplines = $teacher->disciplines()->pluck('id')->toArray();
+        }
 
         return [
             'name' => 'required|unique:horaries,name,' . $id . ',id',
             'teacher_id' => 'required|exists:teachers,id',
-            'discipline_id' => 'required|exists:disciplines,id|in:' . implode(" ", $disciplines),
+            'discipline_id' => 'required|exists:disciplines,id' . ($this->input('teacher_id')) ? '|in:'.implode(" ", $disciplines) : '',
             'grid_id' => [
                 'required', 'exists:grids,id',
                 function ($attribute, $value, $fail) {
@@ -70,9 +74,9 @@ class HoraryRequest extends FormRequest
                 }
             ],
             'weekday' => 'required|string|in:Domingo,Segunda-Feira,Terça-Feira,Quarta-Feira,Quinta-Feira,Sexta-Feira,Sábado',
-            'start_time' => 'required|date_format:H:i:s',
+            'start_time' => 'required|date_format:H:i',
             'end_time' => [
-                'required', 'date_format:H:i:s',
+                'required', 'date_format:H:i',
                 function ($attribute, $value, $fail) {
                     $startTime = Carbon::parse($this->input('start_time'));
                     $endTime = Carbon::parse($this->input('end_time'));

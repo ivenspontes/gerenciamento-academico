@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequest;
+use App\Models\Classroom;
 use App\Models\Discipline;
+use App\Models\Grid;
 use App\Models\Teacher;
 
 class TeacherController extends Controller
 {
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $teachers = Teacher::all();
@@ -20,10 +22,10 @@ class TeacherController extends Controller
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $disciplines = Discipline::all();
@@ -31,11 +33,11 @@ class TeacherController extends Controller
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(TeacherRequest $request)
     {
         $teacher = Teacher::create($request->validated());
@@ -50,23 +52,28 @@ class TeacherController extends Controller
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  \App\Models\Teacher  $teacher
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Teacher  $teacher
+     * @return \Illuminate\Http\Response
+     */
     public function show(Teacher $teacher)
     {
         $disciplines = Discipline::all();
-        return view('teacher.show', compact('teacher', 'disciplines'));
+
+        $gridsPluck = $teacher->horaries->pluck('grid_id');
+
+        $grids = Grid::whereIn('id',$gridsPluck)->get();
+
+        return view('teacher.show', compact('teacher', 'disciplines', 'grids'));
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  \App\Models\Teacher  $teacher
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Teacher  $teacher
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Teacher $teacher)
     {
         $disciplines = Discipline::all();
@@ -74,12 +81,12 @@ class TeacherController extends Controller
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Teacher  $teacher
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Teacher  $teacher
+     * @return \Illuminate\Http\Response
+     */
     public function update(TeacherRequest $request, Teacher $teacher)
     {
         $teacher->update($request->validated());
@@ -95,11 +102,11 @@ class TeacherController extends Controller
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  \App\Models\Teacher  $teacher
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Teacher  $teacher
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();

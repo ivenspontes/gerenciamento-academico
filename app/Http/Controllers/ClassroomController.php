@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClassroomRequest;
 use App\Models\Classroom;
+use App\Models\Discipline;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
@@ -50,7 +52,25 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        return view('classroom.show', compact(['classroom']));
+        $grid = $classroom->grid;
+        $teachersGroup = $grid->horaries->groupBy('teacher_id');
+        $disciplinesGroup = $grid->horaries->groupBy('discipline_id');
+
+        foreach ($teachersGroup as $key => $value) {
+            $teachers[] = Teacher::find($key);
+        }
+
+        foreach ($disciplinesGroup as $key => $value) {
+            $disciplines[] = Discipline::find($key);
+        }
+
+        // order grids by days
+        $gridsWeek = $classroom->grid->horaries->sortBy(['weekday', 'start_time'])->groupBy('weekday')->toArray();
+        $sunday = $gridsWeek['Domingo'];
+        unset($gridsWeek['Domingo']);
+        $gridsWeek['Domingo'] = $sunday;
+
+        return view('classroom.show', compact(['classroom', 'teachers', 'disciplines', 'gridsWeek']));
     }
 
     /**

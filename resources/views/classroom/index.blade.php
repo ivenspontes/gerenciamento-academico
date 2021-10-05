@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>Grade</th>
                             <th>#</th>
                         </tr>
                     </thead>
@@ -28,6 +29,7 @@
                         @foreach ($classrooms as $classroom)
                             <tr>
                                 <td>{{ $classroom->name }}</td>
+                                <td>{{ $classroom->grid->name }}</td>
 
                                 <td>
                                     <a class="btn btn-xs btn-primary"

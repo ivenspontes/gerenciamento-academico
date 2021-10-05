@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\GridController;
 use App\Http\Controllers\HoraryController;
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Redirect;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::resource('teacher', TeacherController::class)
     ->missing(function (Request $request) {

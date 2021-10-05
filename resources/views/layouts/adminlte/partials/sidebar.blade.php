@@ -16,10 +16,10 @@
                with font-awesome or any other icon font library -->
 
                 <li class="nav-item">
-                    <a href="../gallery.html" class="nav-link">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Inicio
+                            Dashboard
                         </p>
                     </a>
                 </li>

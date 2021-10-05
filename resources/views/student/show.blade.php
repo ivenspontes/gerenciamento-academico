@@ -39,7 +39,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Turma:</label>
-                <input class="form-control form-control-lg" type="text" name="classroom" value="{{ (isset($student->classroom->name)) ? $student->classroom->name : '' }}" disabled>
+                <input class="form-control form-control-lg" type="text" name="classroom"
+                    value="{{ isset($student->classroom->name) ? $student->classroom->name : '' }}" disabled>
             </div>
         </div>
         <!-- /.card-body -->

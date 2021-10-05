@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="card-body">
-            @if($students->count())
+            @if ($students->count())
                 <table class="table table-hover my-0">
                     <thead>
                         <tr>
@@ -29,25 +29,26 @@
                     </thead>
                     <tbody>
                         @foreach ($students as $student)
-                        <tr>
-                            <td>{{ $student->name }}</td>
-                            <td>{{ $student->cpf }}</td>
-                            <td>{{ $student->birth_date }}</td>
-                            <td>{{ (isset($student->classroom->name)) ? $student->classroom->name : '' }}</td>
-                            <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route('student.show', $student->id) }}"><i
-                                        class="fas fa-eye"></i></a>
-                                <a class="btn btn-xs btn-warning" href="{{ route('student.edit', $student->id) }}"><i
-                                        class="fas fa-edit"></i></a>
-                                <form method='post' action="{{ route('student.destroy', $student->id) }}" style="display:inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                        <i class="fas fa-times-circle"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{{ $student->name }}</td>
+                                <td>{{ $student->cpf }}</td>
+                                <td>{{ $student->birth_date }}</td>
+                                <td>{{ isset($student->classroom->name) ? $student->classroom->name : '' }}</td>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('student.show', $student->id) }}"><i
+                                            class="fas fa-eye"></i></a>
+                                    <a class="btn btn-xs btn-warning" href="{{ route('student.edit', $student->id) }}"><i
+                                            class="fas fa-edit"></i></a>
+                                    <form method='post' action="{{ route('student.destroy', $student->id) }}"
+                                        style="display:inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <i class="fas fa-times-circle"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

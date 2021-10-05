@@ -32,29 +32,30 @@
                     </thead>
                     <tbody>
                         @foreach ($horaries as $horary)
-                        <tr>
-                            <td>{{$horary->name }}</td>
-                            <td>{{$horary->teacher->name }}</td>
-                            <td>{{$horary->discipline->name }}</td>
-                            <td>{{$horary->grid->name }}</td>
-                            <td>{{$horary->weekday }}</td>
-                            <td>{{$horary->start_time }}</td>
-                            <td>{{$horary->end_time }}</td>
-                            <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route('horary.show',$horary->id) }}"><i
-                                        class="fas fa-eye"></i></a>
-                                <a class="btn btn-xs btn-warning" href="{{ route('horary.edit',$horary->id) }}"><i
-                                        class="fas fa-edit"></i></a>
+                            <tr>
+                                <td>{{ $horary->name }}</td>
+                                <td>{{ $horary->teacher->name }}</td>
+                                <td>{{ $horary->discipline->name }}</td>
+                                <td>{{ $horary->grid->name }}</td>
+                                <td>{{ $horary->weekday }}</td>
+                                <td>{{ $horary->start_time }}</td>
+                                <td>{{ $horary->end_time }}</td>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('horary.show', $horary->id) }}"><i
+                                            class="fas fa-eye"></i></a>
+                                    <a class="btn btn-xs btn-warning" href="{{ route('horary.edit', $horary->id) }}"><i
+                                            class="fas fa-edit"></i></a>
 
-                            <form method='post' action="{{ route('horary.destroy', $horary->id) }}" style="display:inline">
-                                @method('delete')
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-xs">
-                                    <i class="fas fa-times-circle"></i>
-                                </button>
-                            </form>
-                            </td>
-                        </tr>
+                                    <form method='post' action="{{ route('horary.destroy', $horary->id) }}"
+                                        style="display:inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <i class="fas fa-times-circle"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

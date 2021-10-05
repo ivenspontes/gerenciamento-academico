@@ -27,7 +27,9 @@
                 <div class="mb-3">
                     <select class="form-control" name="classroom_id" id="classroom_id">
                         @foreach ($classrooms as $classroom)
-                            <option value="{{ $classroom->id }}" {{ ($grid->classroom->id == $classroom->id) ?  'selected="selected"' : ''}}>{{ $classroom->name }}</option>
+                            <option value="{{ $classroom->id }}"
+                                {{ $grid->classroom->id == $classroom->id ? 'selected="selected"' : '' }}>
+                                {{ $classroom->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -55,4 +57,9 @@
         @endif
     @endisset
 
+@endsection
+
+
+@section('js')
+    {!! JsValidator::formRequest('App\Http\Requests\GridRequest') !!}
 @endsection

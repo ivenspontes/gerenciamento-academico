@@ -26,7 +26,7 @@ class GridRequest extends FormRequest
         $id = $this->segment(2);
 
         return [
-            'name' => 'required|unique:grids,name,,'.$id.',id',
+            'name' => 'required|unique:grids,name,,' . $id . ',id',
             'classroom_id' => 'required|exists:classrooms,id',
         ];
     }

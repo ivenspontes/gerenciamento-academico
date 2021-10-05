@@ -26,7 +26,7 @@ class ClassroomRequest extends FormRequest
         $id = $this->segment(2);
 
         return [
-            'name' => 'required|string|max:100|unique:classrooms,name,'.$id.',id'
+            'name' => 'required|string|max:100|unique:classrooms,name,' . $id . ',id'
         ];
     }
 }
