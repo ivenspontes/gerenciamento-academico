@@ -25,7 +25,7 @@
                     disabled>
             </div>
 
-            <label class="form-label">Disciplinas:</label>
+            <label class="form-label">Professores:</label>
             @foreach ($discipline->teachers as $teacher)
                 <div class="col-12">
                     <div class="form-check">
