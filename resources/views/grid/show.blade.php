@@ -22,6 +22,7 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Turma:</label>
                 <select class="form-control" name="classroom_id" id="classroom_id">
                     @foreach ($classrooms as $classroom)
                         <option value="{{ $classroom->id }}"
@@ -37,7 +38,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Grade de horario</h3>
+            <h3 class="card-title">Grade de horário</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">

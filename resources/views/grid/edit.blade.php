@@ -25,6 +25,7 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Turma:</label>
                     <select class="form-control" name="classroom_id" id="classroom_id">
                         @foreach ($classrooms as $classroom)
                             <option value="{{ $classroom->id }}"
