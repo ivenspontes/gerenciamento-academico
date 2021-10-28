@@ -43,7 +43,13 @@ class CheckConflict implements Rule
             $horaries = Horary::where('grid_id', $this->input['grid_id'])->whereNotIn('id', [$this->horaryId])->get();
         } else {
             $grid = Grid::find($this->input['grid_id']);
-            $horaries = $grid->horaries;
+
+            if ($grid) {
+                $horaries = $grid->horaries;
+            } else {
+                $this->horaryConflict = 'O Campo grade deve ser preenchido!';
+                return false;
+            }
         }
 
         foreach ($horaries as $horary) {
@@ -52,12 +58,12 @@ class CheckConflict implements Rule
             if ($horary->weekday == $this->input['weekday']) {
 
                 if($startTime->equalTo($startTimeHorary) && $endTime->equalTo($endTimeHorary)) {
-                    $this->horaryConflict = $horary;
+                    $this->horaryConflict = 'Horário em conflito: ' . $this->horaryConflict->start_time. ' - ' . $this->horaryConflict->end_time;
                     return false;
                 }
 
                 if ($time->gt($startTimeHorary) && $time->lt($endTimeHorary)) {
-                    $this->horaryConflict = $horary;
+                    $this->horaryConflict = 'Horário em conflito: ' . $this->horaryConflict->start_time. ' - ' . $this->horaryConflict->end_time;
                     return false;
                 }
             }
@@ -73,8 +79,6 @@ class CheckConflict implements Rule
     */
     public function message()
     {
-        return 'Existe um conflito de horários nessa grade. ' .
-        'Horário em conflito: ' . $this->horaryConflict->start_time. ' - '
-        . $this->horaryConflict->end_time;
+        return 'Existe um conflito de horários nessa grade. ' . $this->horaryConflict;
     }
 }
