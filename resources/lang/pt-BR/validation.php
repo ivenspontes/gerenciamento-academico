@@ -186,6 +186,14 @@ return [
         'description' => 'descrição',
         'password_confirmation' => 'confirmação da senha',
         'current_password' => 'senha atual',
+
+        'teacher_id' => 'professor',
+        'grid_id' => 'grade',
+        'weekday' => 'dia da semana',
+        'start_time' => 'horário início',
+        'end_time' => 'horário término',
+        'classroom_id' => 'turma',
+        'birth_date' => 'data de nascimento',
     ],
 
 ];
