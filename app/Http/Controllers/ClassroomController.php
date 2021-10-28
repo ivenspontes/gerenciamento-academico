@@ -60,7 +60,7 @@ class ClassroomController extends Controller
         $disciplines = null;
         $gridsWeek = null;
 
-        if (!is_null($grid)) {
+        if (!$grid->empty) {
             $teachersGroup = $grid->horaries->groupBy('teacher_id');
             $disciplinesGroup = $grid->horaries->groupBy('discipline_id');
             foreach ($teachersGroup as $key => $value) {
@@ -72,15 +72,8 @@ class ClassroomController extends Controller
             }
 
             // order grids by days
-            $gridsWeek = $classroom->grid->horaries->sortBy(['weekday', 'start_time'])->groupBy('weekday')->toArray();
-            if ($gridsWeek) {
-                $sunday = $gridsWeek['Domingo'];
-                unset($gridsWeek['Domingo']);
-                $gridsWeek['Domingo'] = $sunday;
-            }
+            $gridsWeek = $grid->horariesByWeekday();
         }
-
-
 
         return view('classroom.show', compact(['classroom', 'teachers', 'disciplines', 'gridsWeek']));
     }

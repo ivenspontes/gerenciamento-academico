@@ -40,4 +40,22 @@ class Grid extends Model
     {
         return $this->hasMany(Horary::class);
     }
+
+
+    /**
+     * Get array of horaries order by and group by weekday
+     *
+     * @return array $horaries
+     */
+    public function horariesByWeekday()
+    {
+        $horaries = $this->horaries->sortBy(['weekday','start_time'])->groupBy('weekday')->toArray();
+
+        if ($horaries) {
+            $sunday = $horaries['Domingo'];
+            unset($horaries['Domingo']);
+            $horaries['Domingo'] = $sunday;
+        }
+        return $horaries;
+    }
 }
