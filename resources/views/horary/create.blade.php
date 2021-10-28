@@ -116,6 +116,6 @@
 
 @endsection
 
-{{-- @section('js')
+@section('js')
     {!! JsValidator::formRequest('App\Http\Requests\HoraryRequest') !!}
-@endsection --}}
+@endsection

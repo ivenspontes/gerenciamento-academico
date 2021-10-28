@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Grid;
-use App\Models\Horary;
-use App\Models\Teacher;
-use Carbon\Carbon;
+use App\Rules\CheckConflict;
+use App\Rules\GreaterThan;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class HoraryRequest extends FormRequest
 {
@@ -29,67 +28,36 @@ class HoraryRequest extends FormRequest
     {
         $id = $this->segment(2);
 
-        print($this->input('teacher_id'));
-
         return [
             'name' => 'required|unique:horaries,name,' . $id . ',id',
             'teacher_id' => 'required|exists:teachers,id',
-            'discipline_id' => ['required','exists:disciplines,id',
-                function ($attribute, $value, $fail) {
-                    $teacher = Teacher::find($this->input('teacher_id'));
-
-                    $disciplines = $teacher->disciplines()->where('discipline_id', $value)->get();
-
-                    if (!$disciplines) {
-                        $fail('Professor não associado a essa disciplina.');
-                    }
-                }
+            'discipline_id' => [
+                'required',
+                Rule::exists('teacher_discipline', 'discipline_id')
+                    ->where('teacher_id', $this->input('teacher_id'))
             ],
-        // . ($this->input('teacher_id')) ? '|in:'.implode(" ", $disciplines) : '',
             'grid_id' => [
-                'required', 'exists:grids,id',
-                function ($attribute, $value, $fail) {
-                    $grid = Grid::find($value);
-                    $startTime = Carbon::parse($this->input('start_time'));
-                    $endTime = Carbon::parse($this->input('end_time'));
-
-                    if ($this->segment(2)) {
-                        if (Horary::find($this->segment(2))->grid->id == $this->input('grid_id')) {
-                            foreach (Horary::where('grid_id', $this->input('grid_id'))->whereNotIn('id', [$this->segment(2)])->get() as $horary) {
-                                $startTimeExist = Carbon::parse($horary->start_time);
-                                $endTimeExist = Carbon::parse($horary->end_time);
-                                if ($horary->weekday == $this->input('weekday')) {
-                                    if ($startTime->between($startTimeExist, $endTimeExist) || $endTime->between($startTimeExist, $endTimeExist)) {
-                                        $fail('Existe um conflito de horarios nessa grade.');
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        foreach ($grid->horaries as $horary) {
-                            $startTimeExist = Carbon::parse($horary->start_time);
-                            $endTimeExist = Carbon::parse($horary->end_time);
-                            if ($horary->weekday == $this->input('weekday')) {
-                                if ($startTime->between($startTimeExist, $endTimeExist) || $endTime->between($startTimeExist, $endTimeExist)) {
-                                    $fail('Existe um conflito de horarios nessa grade.');
-                                }
-                            }
-                        }
-                    }
-                }
+                'required',
+                'exists:grids,id'
             ],
             'weekday' => 'required|string|in:Domingo,Segunda-Feira,Terça-Feira,Quarta-Feira,Quinta-Feira,Sexta-Feira,Sábado',
-            'start_time' => 'required',
+            'start_time' => [
+                'required',
+                new CheckConflict($this->segment(2), $this->input())
+            ],
             'end_time' => [
                 'required',
-                function ($attribute, $value, $fail) {
-                    $startTime = Carbon::parse($this->input('start_time'));
-                    $endTime = Carbon::parse($this->input('end_time'));
-                    if (!$endTime->gt($startTime)) {
-                        $fail('o valor de \'Horário termino\' deve ser maior que Horário de início.');
-                    }
-                }
+                new CheckConflict($this->segment(2), $this->input()),
+                new GreaterThan($this->input('start_time'))
             ]
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'discipline_id.exists' => 'Professor não associado a essa disciplina.',
+        ];
+
     }
 }
