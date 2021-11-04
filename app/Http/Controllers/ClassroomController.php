@@ -56,22 +56,17 @@ class ClassroomController extends Controller
     {
         $grid = $classroom->grid;
 
-        $teachers = null;
-        $disciplines = null;
         $gridsWeek = null;
 
-        if (!$grid->empty) {
-            $teachersGroup = $grid->horaries->groupBy('teacher_id');
-            $disciplinesGroup = $grid->horaries->groupBy('discipline_id');
-            foreach ($teachersGroup as $key => $value) {
-                $teachers[] = Teacher::find($key);
-            }
+        if ($grid) {
 
-            foreach ($disciplinesGroup as $key => $value) {
-                $disciplines[] = Discipline::find($key);
-            }
+            // get teaches of grid
+            $teachers = Teacher::find($grid->horaries->groupBy('teacher_id')->keys());
 
-            // order grids by days
+            // get teaches of grid
+            $disciplines = Discipline::find($grid->horaries->groupBy('discipline_id')->keys());
+
+            // get grids order by weekday
             $gridsWeek = $grid->horariesByWeekday();
         }
 
