@@ -188,8 +188,9 @@ return [
         'current_password' => 'senha atual',
 
         'teacher_id' => 'professor',
+        'discipline_id' => 'disciplina',
         'grid_id' => 'grade',
-        'weekday' => 'dia da semana',
+        'week_id' => 'dia da semana',
         'start_time' => 'horário início',
         'end_time' => 'horário término',
         'classroom_id' => 'turma',

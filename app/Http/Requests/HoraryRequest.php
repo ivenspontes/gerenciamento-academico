@@ -40,7 +40,7 @@ class HoraryRequest extends FormRequest
                 'required',
                 'exists:grids,id'
             ],
-            'weekday' => 'required|string|in:Domingo,Segunda-Feira,Terça-Feira,Quarta-Feira,Quinta-Feira,Sexta-Feira,Sábado',
+            'week_id' => 'required|exists:weeks,id',
             'start_time' => [
                 'required',
                 new CheckConflict($this->segment(2), $this->input())

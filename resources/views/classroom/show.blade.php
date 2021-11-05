@@ -34,79 +34,6 @@
     </div>
     <!-- /.card -->
 
-    @if ($gridsWeek)
-
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Grade de horário</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                @foreach ($gridsWeek as $key => $value)
-                    <h4>{{ $key }}</h4>
-                    <table class="table table-hover my-0">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Professor</th>
-                                <th>Disciplina</th>
-                                <th>Grade</th>
-                                <th>Dia da semana</th>
-                                <th>Inicio</th>
-                                <th>Termino</th>
-                                <th>#</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- {{ dd($classroom->grid->horaries->groupBy('weekday')) }} --}}
-
-                            @foreach ($value as $horary)
-                                <tr>
-                                    <td>{{ $horary['name'] }}</td>
-                                    <td>{{ \App\Models\Teacher::find($horary['teacher_id'])->name }}</td>
-                                    <td>{{ \App\Models\Discipline::find($horary['discipline_id'])->name }}</td>
-                                    <td>{{ \App\Models\Grid::find($horary['grid_id'])->name }}</td>
-                                    <td>{{ $horary['weekday'] }}</td>
-                                    <td>{{ $horary['start_time'] }}</td>
-                                    <td>{{ $horary['end_time'] }}</td>
-
-                                    <td>
-                                        <a class="btn btn-xs btn-primary"
-                                            href="{{ route('student.show', $horary['id']) }}"><i
-                                                class="fas fa-eye"></i></a>
-                                        <a class="btn btn-xs btn-warning"
-                                            href="{{ route('student.edit', $horary['id']) }}"><i
-                                                class="fas fa-edit"></i></a>
-                                        <form method='post' action="{{ route('horary.destroy', $horary['id']) }}"
-                                            style="display:inline">
-                                            @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-xs">
-                                                <i class="fas fa-times-circle"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                @endforeach
-            </div>
-
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-    @endif
-
-
-
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Estudantes</h3>
@@ -269,5 +196,75 @@
 @endif
 
 
+@if ($horariesByWeek)
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Grade de horário</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                @foreach ($horariesByWeek as $day)
+                    <h4>{{ $day->first()->weekday->name }}</h4>
+                    <table class="table table-hover my-0">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Professor</th>
+                                <th>Disciplina</th>
+                                <th>Grade</th>
+                                <th>Dia da semana</th>
+                                <th>Inicio</th>
+                                <th>Termino</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($day as $horary)
+                                <tr>
+                                    <td>{{ $horary->name }}</td>
+                                    <td>{{ $horary->teacher->name }}</td>
+                                    <td>{{ $horary->discipline->name }}</td>
+                                    <td>{{ $horary->grid->name }}</td>
+                                    <td>{{ $horary->weekday->name }}</td>
+                                    <td>{{ $horary->start_time }}</td>
+                                    <td>{{ $horary->end_time }}</td>
+
+                                    <td>
+                                        <a class="btn btn-xs btn-primary"
+                                            href="{{ route('horary.show', $horary->id) }}"><i
+                                                class="fas fa-eye"></i></a>
+                                        <a class="btn btn-xs btn-warning"
+                                            href="{{ route('horary.edit', $horary->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        <form method='post' action="{{ route('horary.destroy', $horary->id) }}"
+                                            style="display:inline">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-xs">
+                                                <i class="fas fa-times-circle"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                    <hr>
+                @endforeach
+            </div>
+
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    @endif
 
 @endsection

@@ -14,8 +14,8 @@
                     <i class="fas fa-minus"></i>
                 </button>
                 {{-- <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-          <i class="fas fa-times"></i>
-        </button> --}}
+                <i class="fas fa-times"></i>
+            </button> --}}
             </div>
         </div>
         <div class="card-body">
@@ -60,20 +60,10 @@
             <div class="mb-3">
                 <label class="form-label">Dia da semana:</label>
                 <select disabled class="form-control" name="weekday" id="weekday">
-                    <option value="Domingo" {{ $horary->weekday == 'Domingo' ? 'selected="selected"' : '' }}>Domingo
-                    </option>
-                    <option value="Segunda-Feira"
-                        {{ $horary->weekday == 'Segunda-Feira' ? 'selected="selected"' : '' }}>Segunda-Feira</option>
-                    <option value="Terça-Feira" {{ $horary->weekday == 'Terça-Feira' ? 'selected="selected"' : '' }}>
-                        Terça-Feira</option>
-                    <option value="Quarta-Feira" {{ $horary->weekday == 'Quarta-Feira' ? 'selected="selected"' : '' }}>
-                        Quarta-Feira</option>
-                    <option value="Quinta-Feira" {{ $horary->weekday == 'Quinta-Feira' ? 'selected="selected"' : '' }}>
-                        Quinta-Feira</option>
-                    <option value="Sexta-Feira" {{ $horary->weekday == 'Sexta-Feira' ? 'selected="selected"' : '' }}>
-                        Sexta-Feira</option>
-                    <option value="Sábado" {{ $horary->weekday == 'Sábado' ? 'selected="selected"' : '' }}>Sábado
-                    </option>
+                    @foreach ($weekdays as $day)
+                        <option value="{{ $day->id }}"
+                            {{ $horary->week_id == $day->id ? 'selected="selected"' : '' }}>{{ $day->name }}</option>
+                    @endforeach
                 </select>
             </div>
 

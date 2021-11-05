@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Horary extends Model
 {
@@ -20,7 +21,7 @@ class Horary extends Model
         'teacher_id',
         'discipline_id',
         'grid_id',
-        'weekday',
+        'week_id',
         'start_time',
         'end_time',
     ];
@@ -54,4 +55,24 @@ class Horary extends Model
     {
         return $this->belongsTo(Grid::class);
     }
+
+    /**
+     * Get the weekday of the the Horary
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function weekday(): BelongsTo
+    {
+        return $this->belongsTo(Week::class, 'week_id', 'id');
+    }
+
+    // /**
+    //  * Get the week associated with the Horary
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    //  */
+    // public function weekday(): HasOne
+    // {
+    //     return $this->hasOne(Week::class, 'id', 'week_id');
+    // }
 }

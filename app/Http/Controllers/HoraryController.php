@@ -7,6 +7,7 @@ use App\Models\Discipline;
 use App\Models\Grid;
 use App\Models\Horary;
 use App\Models\Teacher;
+use App\Models\Week;
 use Illuminate\Http\Request;
 
 class HoraryController extends Controller
@@ -32,8 +33,9 @@ class HoraryController extends Controller
         $teachers = Teacher::all();
         $disciplines = Discipline::all();
         $grids = Grid::all();
+        $weekdays = Week::all();
 
-        return view('horary.create', compact(['teachers', 'disciplines', 'grids']));
+        return view('horary.create', compact(['teachers', 'disciplines', 'grids', 'weekdays']));
     }
 
     /**
@@ -60,8 +62,9 @@ class HoraryController extends Controller
         $teachers = Teacher::all();
         $disciplines = Discipline::all();
         $grids = Grid::all();
+        $weekdays = Week::all();
 
-        return view('horary.show', compact(['horary', 'teachers', 'disciplines', 'grids']));
+        return view('horary.show', compact(['horary', 'teachers', 'disciplines', 'grids', 'weekdays']));
     }
 
     /**
@@ -75,8 +78,9 @@ class HoraryController extends Controller
         $teachers = Teacher::all();
         $disciplines = Discipline::all();
         $grids = Grid::all();
+        $weekdays = Week::all();
 
-        return view('horary.edit', compact(['horary', 'teachers', 'disciplines', 'grids']));
+        return view('horary.edit', compact(['horary', 'teachers', 'disciplines', 'grids', 'weekdays']));
     }
 
     /**

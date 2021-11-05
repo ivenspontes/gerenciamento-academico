@@ -55,7 +55,7 @@ class CheckConflict implements Rule
         foreach ($horaries as $horary) {
             $startTimeHorary = Carbon::parse($horary->start_time);
             $endTimeHorary = Carbon::parse($horary->end_time);
-            if ($horary->weekday == $this->input['weekday']) {
+            if ($horary->week_id == $this->input['week_id']) {
 
                 if($startTime->equalTo($startTimeHorary) && $endTime->equalTo($endTimeHorary)) {
                     $this->horaryConflict = 'Horário em conflito: ' . $this->horaryConflict->start_time. ' - ' . $this->horaryConflict->end_time;

@@ -63,20 +63,11 @@
 
                 <div class="mb-3">
                     <label class="form-label">Dia da semana:</label>
-                    <select class="form-control" name="weekday" id="weekday">
+                    <select class="form-control" name="week_id" id="week_id">
                         <option value="" selected="selected">Escolha...</option>
-                        <option value="Domingo" {{ old('weekday') == 'Domingo' ? 'selected' : '' }}>Domingo</option>
-                        <option value="Segunda-Feira" {{ old('weekday') == 'Segunda-Feira' ? 'selected' : '' }}>
-                            Segunda-Feira</option>
-                        <option value="Terça-Feira" {{ old('weekday') == 'Terça-Feira' ? 'selected' : '' }}>Terça-Feira
-                        </option>
-                        <option value="Quarta-Feira" {{ old('weekday') == 'Quarta-Feira' ? 'selected' : '' }}>
-                            Quarta-Feira</option>
-                        <option value="Quinta-Feira" {{ old('weekday') == 'Quinta-Feira' ? 'selected' : '' }}>
-                            Quinta-Feira</option>
-                        <option value="Sexta-Feira" {{ old('weekday') == 'Sexta-Feira' ? 'selected' : '' }}>Sexta-Feira
-                        </option>
-                        <option value="Sábado" {{ old('weekday') == 'Sábado' ? 'selected' : '' }}>Sábado</option>
+                        @foreach ($weekdays as $day)
+                            <option value="{{ $day->id }}" {{ old('week_id') == $day->id ? 'selected' : '' }}>{{ $day->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 

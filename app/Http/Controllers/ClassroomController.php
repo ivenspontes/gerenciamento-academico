@@ -55,22 +55,20 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         $grid = $classroom->grid;
-
-        $gridsWeek = null;
+        $horaries = $grid->horaries;
 
         if ($grid) {
+            // get teaches of grid
+            $teachers = Teacher::find($horaries->groupBy('teacher_id')->keys());
 
             // get teaches of grid
-            $teachers = Teacher::find($grid->horaries->groupBy('teacher_id')->keys());
-
-            // get teaches of grid
-            $disciplines = Discipline::find($grid->horaries->groupBy('discipline_id')->keys());
+            $disciplines = Discipline::find($horaries->groupBy('discipline_id')->keys());
 
             // get grids order by weekday
-            $gridsWeek = $grid->horariesByWeekday();
+            $horariesByWeek = $horaries->sortBy(['week_id','start_time'])->groupBy('week_id');
         }
 
-        return view('classroom.show', compact(['classroom', 'teachers', 'disciplines', 'gridsWeek']));
+        return view('classroom.show', compact(['classroom', 'teachers', 'disciplines', 'horariesByWeek']));
     }
 
     /**

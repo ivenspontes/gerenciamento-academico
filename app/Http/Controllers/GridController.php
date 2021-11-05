@@ -52,11 +52,10 @@ class GridController extends Controller
      */
     public function show(Grid $grid)
     {
-        // order grids by days
-        $gridsWeek = $grid->horariesByWeekday();
+        // get grids order by weekday
+        $horariesByWeek = $grid->horaries->sortBy(['week_id','start_time'])->groupBy('week_id');
 
-        $classrooms = Classroom::all();
-        return view('grid.show', compact(['grid', 'classrooms', 'gridsWeek']));
+        return view('grid.show', compact(['grid', 'horariesByWeek']));
     }
 
     /**
